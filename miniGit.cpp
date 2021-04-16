@@ -1,6 +1,7 @@
 #include "miniGit.h"
 miniGit::miniGit() {}
 miniGit::~miniGit() {}
+// TODO Collin
 void miniGit::add() {
   // prompt user to enter a file name
   cout << "Enter a file name: ";
@@ -17,6 +18,7 @@ void miniGit::add() {
   // as well as a pointer to the next node.
   // The repository file name should be the combination of the original file name and the version number.
 }
+// TODO Linnea
 void miniGit::remove() {
   // Prompt the user to enter a file name.
   cout << "Enter a file name: ";

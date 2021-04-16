@@ -4,6 +4,8 @@ using namespace std;
 void printMenu(); // prints user options
 void print(const string &content);
 
+
+
 int main() {
   bool quit = false;
   while (!quit) {

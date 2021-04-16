@@ -37,3 +37,7 @@
 *.xml
 .DS_Store
 /cmake-build-debug/
+
+# Other
+*.pdf
+/miniGit

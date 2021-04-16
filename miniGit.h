@@ -21,6 +21,14 @@ struct doublyNode {
 };
 
 class miniGit {
+ public:
+  miniGit();
+  virtual ~miniGit();
+  void add();
+  void remove();
+  void commit();
+  void checkout();
 
+ private:
 };
 

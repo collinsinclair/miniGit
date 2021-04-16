@@ -6,6 +6,7 @@
 using namespace std;
 
 void printMenu(); // prints user options
+void print(const string &content);
 
 int main() {
   bool quit = false;
@@ -52,10 +53,14 @@ int main() {
 }
 
 void printMenu() {
-  cout << "======Main Menu======" << endl;
-  cout << "1. Add file" << endl;
-  cout << "2. Remove file" << endl;
-  cout << "3. Commit" << endl;
-  cout << "4. Checkout" << endl;
-  cout << "5. Quit" << endl;
+  print("======Main Menu======");
+  print("1. Add file");
+  print("2. Remove file");
+  print("3. Commit");
+  print("4. Checkout");
+  print("5. Quit");
+}
+
+void print(const string &content) {
+  cout << content << endl;
 }

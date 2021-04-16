@@ -12,7 +12,7 @@ int main() {
   bool quit = false;
   while (!quit) {
 	int    option;
-	string inputLine;
+	string inputLine; 
 
 	printMenu();
 

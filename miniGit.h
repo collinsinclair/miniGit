@@ -26,5 +26,6 @@ class miniGit {
   void checkout();
 
  private:
+  doublyNode* head; // Pointer to the head of the doubly linked list
 };
 

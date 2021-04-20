@@ -21,6 +21,7 @@ class miniGit {
  public:
   miniGit();
   virtual ~miniGit();
+  void init();
   void add();
   void remove();
   void commit();

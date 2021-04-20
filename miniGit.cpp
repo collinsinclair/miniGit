@@ -3,8 +3,6 @@
 miniGit::miniGit() {}
 miniGit::~miniGit() {}
 
-// TODO Collin
-
 void miniGit::add() {
   // prompt user to enter a file name
   cout << "Enter a file name: ";
@@ -20,6 +18,7 @@ void miniGit::add() {
   // see if file has already been added
   bool       file_added = false;
   singlyNode *searchPtr = DLL_head->SLL_head;
+
   // search through SLL
   while (searchPtr->next != nullptr and !file_added) {
 	if (searchPtr->fileName == filename) {
@@ -62,7 +61,6 @@ void miniGit::remove() {
 	  curr = curr->next;
 	}
   }
-
 }
 
 void miniGit::commit() {
@@ -78,4 +76,7 @@ void miniGit::checkout() {
   // TODO This step will require a search through the DLL for a node with matching commit number
 
   // TODO must disallow add, remove, and commit operations when the current version is different from the most recent commit (the last DLL node)
+}
+void miniGit::init() {
+
 }

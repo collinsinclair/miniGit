@@ -9,13 +9,14 @@ void printMenu(); // prints user options
 void print(const string &content);
 
 int main() {
+
+  miniGit repo;
+  repo.init();
+
   bool quit = false;
   while (!quit) {
 	int    option;
 	string inputLine;
-
-	// we need to initialize the repo - for now I'm just gonna make the object so we can add to the menu
-	miniGit repo;
 
 	printMenu();
 
@@ -35,7 +36,7 @@ int main() {
 		break;
 	  }
 	  case 2: {
-	    repo.remove();
+		repo.remove();
 		break;
 	  }
 	  case 3: {

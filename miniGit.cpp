@@ -1,7 +1,20 @@
 #include "miniGit.h"
 #include<filesystem>
+#include<iostream>
+#include <stdlib.h>
 miniGit::miniGit() {}
 miniGit::~miniGit() {}
+
+// helper function for receiving user input
+string getChoice() {
+  string choice;
+  getline(cin, choice);
+  while (!(choice == "y" or choice == "n")) {
+	cout << R"(Invalid choice. Type "y" for yes or "n" for no: )";
+	getline(cin, choice);
+  }
+  return choice;
+}
 
 void miniGit::add() {
   // prompt user to enter a file name
@@ -78,5 +91,30 @@ void miniGit::checkout() {
   // TODO must disallow add, remove, and commit operations when the current version is different from the most recent commit (the last DLL node)
 }
 void miniGit::init() {
+  // check if directory is a repo already
+  bool is_repo = std::filesystem::exists(".minigit");
 
+  // if cwd is a repo, ask user if they want to overwrite
+  // TODO right now, I'm only giving the option to overwrite or quit, but perhaps we could
+  // add a "load repo" functionality later? tbd
+  if (is_repo) {
+	cout << "Current directory is already a repository. Overwrite? ([y]es/[n]o): ";
+	string choice = getChoice();
+	if (choice == "y") {
+	  std::filesystem::remove_all(".minigit");
+	  std::filesystem::create_directory(".minigit");
+	} else
+	  std::exit(0); // terminates program normally
+  }
+
+	// if there isn't a repo in cwd, ask user if they want to make one
+  else {
+	cout << "Initialize an empty repository in the current directory? ([y]es/[n]o): ";
+	string choice = getChoice();
+	if (choice == "y") {
+	  std::filesystem::remove_all(".minigit");
+	  std::filesystem::create_directory(".minigit");
+	} else
+	  std::exit(0); // terminates program normally
+  }
 }

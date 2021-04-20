@@ -14,6 +14,9 @@ int main() {
 	int    option;
 	string inputLine;
 
+	// we need to initialize the repo - for now I'm just gonna make the object so we can add to the menu
+	miniGit repo;
+
 	printMenu();
 
 	getline(cin, inputLine);
@@ -28,9 +31,11 @@ int main() {
 	switch (option) {
 
 	  case 1: {
+		repo.add();
 		break;
 	  }
 	  case 2: {
+	    repo.remove();
 		break;
 	  }
 	  case 3: {

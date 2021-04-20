@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <filesystem>
 using namespace std;
 
 struct singlyNode {
@@ -11,7 +12,7 @@ struct singlyNode {
 
 struct doublyNode {
   int        commitNumber;
-  singlyNode *head;
+  singlyNode *SLL_head;
   doublyNode *previous;
   doublyNode *next;
 };
@@ -26,6 +27,6 @@ class miniGit {
   void checkout();
 
  private:
-  doublyNode* head; // Pointer to the head of the doubly linked list
+  doublyNode *DLL_head; // Pointer to the DLL_head of the doubly linked list
 };
 

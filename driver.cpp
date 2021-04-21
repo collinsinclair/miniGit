@@ -40,9 +40,11 @@ int main() {
 		break;
 	  }
 	  case 3: {
+		repo.commit();
 		break;
 	  }
 	  case 4: {
+		repo.checkout();
 		break;
 	  }
 
@@ -65,8 +67,4 @@ void printMenu() {
   print("3. Commit");
   print("4. Checkout");
   print("5. Quit");
-}
-
-void print(const string &content) {
-  cout << content << endl;
 }

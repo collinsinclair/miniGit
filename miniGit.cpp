@@ -2,19 +2,32 @@
 #include<filesystem>
 #include<iostream>
 #include <stdlib.h>
-miniGit::miniGit() {}
-miniGit::~miniGit() {}
 
-// helper function for receiving user input
+// ---------- HELPERS ----------
 string getChoice() {
   string choice;
   getline(cin, choice);
   while (!(choice == "y" or choice == "n")) {
-    cout << R"(Invalid choice. Type "y" for yes or "n" for no: )";
-    getline(cin, choice);
+	cout << R"(Invalid choice. Type "y" for yes or "n" for no: )";
+	getline(cin, choice);
   }
   return choice;
 }
+
+void print(const string &content) {
+  cout << content << endl;
+}
+//------------------------------
+
+miniGit::miniGit() {
+  auto *default_DLL_head = new doublyNode;
+  default_DLL_head->commitNumber = 0;
+  default_DLL_head->SLL_head     = nullptr;
+  default_DLL_head->next         = nullptr;
+  default_DLL_head->previous     = nullptr;
+  DLL_head = default_DLL_head;
+}
+miniGit::~miniGit() {}
 
 void miniGit::add() {
   // prompt user to enter a file name
@@ -24,30 +37,42 @@ void miniGit::add() {
 
   // check that is exists
   while (!std::filesystem::exists(filename)) {
-    cout << "File not found. Enter a valid filename: ";
-    getline(cin, filename);
+	cout << "File not found. Enter a valid filename: ";
+	getline(cin, filename);
   }
 
   // see if file has already been added
   bool       file_added = false;
   singlyNode *searchPtr = DLL_head->SLL_head;
 
-  // search through SLL
-  while (searchPtr != nullptr and !file_added) {
-    if (searchPtr->fileName == filename) {
-      file_added = true;
-      cout << "File " << filename << " already added. The same file cannot be added twice." << endl;
-    }
-    searchPtr = searchPtr->next;
+  // base case - SLL hasn't been started yet
+  if (searchPtr == nullptr) {
+	auto *toAdd = new singlyNode;
+	toAdd->next        = nullptr;
+	toAdd->fileName    = filename;
+	toAdd->fileVersion = filename + "_v00";
+	searchPtr = toAdd;
   }
 
-  // add the file as an SLL node
-  if (!file_added) {
-    auto *toAdd = new singlyNode;
-    toAdd->next        = nullptr;
-    toAdd->fileName    = filename;
-    toAdd->fileVersion = filename + "_v00";
-    searchPtr->next    = toAdd;
+	// otherwise, search the list!
+  else {
+	// search through SLL
+	while (searchPtr != nullptr and !file_added) {
+	  if (searchPtr->fileName == filename) {
+		file_added = true;
+		cout << "File " << filename << " already added. The same file cannot be added twice." << endl;
+	  }
+	  searchPtr = searchPtr->next;
+	}
+
+	// add the file as an SLL node
+	if (!file_added) {
+	  auto *toAdd = new singlyNode;
+	  toAdd->next        = nullptr;
+	  toAdd->fileName    = filename;
+	  toAdd->fileVersion = filename + "_v00";
+	  searchPtr->next    = toAdd;
+	}
   }
 }
 
@@ -58,7 +83,7 @@ void miniGit::remove() {
   // Read in filename to be removed
   cout << "Enter a file name: ";
   string filename;
-  cin >> filename;
+  getline(cin, filename);
 
   singlyNode *curr = DLL_head->SLL_head;
   singlyNode *prev = nullptr;
@@ -99,8 +124,8 @@ void miniGit::init() {
   // TODO right now, I'm only giving the option to overwrite or quit, but perhaps we could
   // add a "load repo" functionality later? tbd
   if (is_repo) {
-    cout << "Current directory is already a repository. Overwrite? ([y]es/[n]o): ";
-    string choice = getChoice();
+	cout << "Current directory is already a repository. Overwrite? ([y]es/[n]o): ";
+	string choice = getChoice();
 	if (choice == "y") {
 	  std::filesystem::remove_all(".minigit");
 	  std::filesystem::create_directory(".minigit");

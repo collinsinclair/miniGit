@@ -10,8 +10,8 @@ string getChoice() {
   string choice;
   getline(cin, choice);
   while (!(choice == "y" or choice == "n")) {
-	cout << R"(Invalid choice. Type "y" for yes or "n" for no: )";
-	getline(cin, choice);
+    cout << R"(Invalid choice. Type "y" for yes or "n" for no: )";
+    getline(cin, choice);
   }
   return choice;
 }
@@ -24,8 +24,8 @@ void miniGit::add() {
 
   // check that is exists
   while (!std::filesystem::exists(filename)) {
-	cout << "File not found. Enter a valid filename: ";
-	getline(cin, filename);
+    cout << "File not found. Enter a valid filename: ";
+    getline(cin, filename);
   }
 
   // see if file has already been added
@@ -33,21 +33,21 @@ void miniGit::add() {
   singlyNode *searchPtr = DLL_head->SLL_head;
 
   // search through SLL
-  while (searchPtr->next != nullptr and !file_added) {
-	if (searchPtr->fileName == filename) {
-	  file_added = true;
-	  cout << "File " << filename << " already added. The same file cannot be added twice." << endl;
-	}
-	searchPtr = searchPtr->next;
+  while (searchPtr != nullptr and !file_added) {
+    if (searchPtr->fileName == filename) {
+      file_added = true;
+      cout << "File " << filename << " already added. The same file cannot be added twice." << endl;
+    }
+    searchPtr = searchPtr->next;
   }
 
   // add the file as an SLL node
   if (!file_added) {
-	auto *toAdd = new singlyNode;
-	toAdd->next        = nullptr;
-	toAdd->fileName    = filename;
-	toAdd->fileVersion = filename + "_v00";
-	searchPtr->next    = toAdd;
+    auto *toAdd = new singlyNode;
+    toAdd->next        = nullptr;
+    toAdd->fileName    = filename;
+    toAdd->fileVersion = filename + "_v00";
+    searchPtr->next    = toAdd;
   }
 }
 
@@ -90,6 +90,7 @@ void miniGit::checkout() {
 
   // TODO must disallow add, remove, and commit operations when the current version is different from the most recent commit (the last DLL node)
 }
+
 void miniGit::init() {
   // check if directory is a repo already
   bool is_repo = std::filesystem::exists(".minigit");
@@ -98,8 +99,8 @@ void miniGit::init() {
   // TODO right now, I'm only giving the option to overwrite or quit, but perhaps we could
   // add a "load repo" functionality later? tbd
   if (is_repo) {
-	cout << "Current directory is already a repository. Overwrite? ([y]es/[n]o): ";
-	string choice = getChoice();
+    cout << "Current directory is already a repository. Overwrite? ([y]es/[n]o): ";
+    string choice = getChoice();
 	if (choice == "y") {
 	  std::filesystem::remove_all(".minigit");
 	  std::filesystem::create_directory(".minigit");

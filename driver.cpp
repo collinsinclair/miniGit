@@ -2,7 +2,7 @@
 #include <fstream>
 #include <filesystem>
 #include <vector>
-#include <miniGit.h>
+#include "miniGit.h"
 using namespace std;
 
 void printMenu(); // prints user options

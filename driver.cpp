@@ -65,7 +65,7 @@ int main() {
 		break;
 	  }
 
-	  case 3510: {
+	  case 3850: {
 		repo.setDebug(false);
 		print("Debug mode disabled.\n");
 		break;

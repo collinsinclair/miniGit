@@ -1,7 +1,7 @@
 #include "miniGit.h"
 #include<filesystem>
 #include<iostream>
-#include <stdlib.h>
+#include <cstdlib>
 
 // ---------- HELPERS ----------
 string getChoice() {
@@ -26,7 +26,9 @@ miniGit::miniGit() {
   default_DLL_head->next         = nullptr;
   default_DLL_head->previous     = nullptr;
   DLL_head = default_DLL_head;
+  debug    = false;
 }
+
 miniGit::~miniGit() {}
 
 void miniGit::add() {
@@ -47,20 +49,31 @@ void miniGit::add() {
 
   // base case - SLL hasn't been started yet
   if (searchPtr == nullptr) {
+	if (debug)
+	  print("DEBUG MSG: searchPtr was null.\n"); // ===DEBUG MSG===
 	auto *toAdd = new singlyNode;
 	toAdd->next        = nullptr;
 	toAdd->fileName    = filename;
 	toAdd->fileVersion = filename + "_v00";
-	searchPtr = toAdd;
+	DLL_head->SLL_head = toAdd;
+	print("Success: file added.\n");
+	if (debug) {
+	  cout << "DEBUG MSG: Filename: " << toAdd->fileName << endl << endl; // ===DEBUG MSG===
+	}
   }
 
 	// otherwise, search the list!
   else {
 	// search through SLL
+	if (debug) {
+	  print("DEBUG MSG: searchPtr was not null. Searching SLL list.\n"); // ===DEBUG MSG===
+	}
 	while (searchPtr != nullptr and !file_added) {
+	  if (debug)
+		cout << "DEBUG MSG: " << searchPtr->fileName << endl << endl; // ===DEBUG MSG===
 	  if (searchPtr->fileName == filename) {
 		file_added = true;
-		cout << "File " << filename << " already added. The same file cannot be added twice." << endl;
+		cout << "File " << filename << " already added. The same file cannot be added twice." << endl << endl;
 	  }
 	  searchPtr = searchPtr->next;
 	}
@@ -72,6 +85,7 @@ void miniGit::add() {
 	  toAdd->fileName    = filename;
 	  toAdd->fileVersion = filename + "_v00";
 	  searchPtr->next    = toAdd;
+	  print("Success: file added.\n");
 	}
   }
 }
@@ -143,4 +157,7 @@ void miniGit::init() {
 	} else
 	  std::exit(0); // terminates program normally
   }
+}
+void miniGit::setDebug(bool setting) {
+  debug = setting;
 }

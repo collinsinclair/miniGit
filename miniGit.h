@@ -26,8 +26,10 @@ class miniGit {
   void remove();
   void commit();
   void checkout();
+  void setDebug(bool);
 
  private:
   doublyNode *DLL_head; // Pointer to the DLL_head of the doubly linked list
+  bool debug;
 };
 

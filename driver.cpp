@@ -17,17 +17,23 @@ int main() {
   while (!quit) {
 	int    option;
 	string inputLine;
+	bool   validChoice = false;
 
 	printMenu();
 
 	getline(cin, inputLine);
 
-	if (inputLine.length() != 1 or inputLine[0] < '0' or inputLine[1] > '5') {
-	  cerr << "Invalid option : " << inputLine << endl;
-	  continue;
-	}
+	while (!validChoice) {
+	  try {
+		option      = stoi(inputLine);
+		validChoice = true;
+	  }
 
-	option = stoi(inputLine);
+	  catch (...) {
+		std::cerr << "Invalid choice. Enter a number: ";
+		getline(cin, inputLine);
+	  }
+	}
 
 	switch (option) {
 
@@ -52,6 +58,22 @@ int main() {
 		quit = true;
 		break;
 	  }
+
+	  case 8127: {
+		repo.setDebug(true);
+		print("Debug mode enabled.\n");
+		break;
+	  }
+
+	  case 3510: {
+		repo.setDebug(false);
+		print("Debug mode disabled.\n");
+		break;
+	  }
+
+	  default: {
+		std::cerr << "Invalid choice. Enter a number specified by menu." << endl;
+	  }
 	}
   }
 
@@ -61,10 +83,27 @@ int main() {
 }
 
 void printMenu() {
-  print("======Main Menu======");
-  print("1. Add file");
-  print("2. Remove file");
-  print("3. Commit");
-  print("4. Checkout");
-  print("5. Quit");
+
+  print("          miniGit         ");
+  print("+================+=======+");
+  print("|     To...      | Enter |");
+  print("|----------------|-------|");
+  print("| Add a file     |   1   |");
+  print("| Remove a file  |   2   |");
+  print("| Commit changes |   3   |");
+  print("| Checkout       |   4   |");
+  print("| Quit           |   5   |");
+  print("+================+=======+");
+  cout << "\nEnter a number: ";
 }
+
+//           miniGit
+// +================+=======+
+// |     To...      | Enter |
+// |----------------|-------|
+// | Add a file     |   1   |
+// | Remove a file  |   2   |
+// | Commit changes |   3   |
+// | Checkout       |   4   |
+// | Quit           |   5   |
+// +================+=======+

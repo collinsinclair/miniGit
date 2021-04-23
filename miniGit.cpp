@@ -98,15 +98,30 @@ void miniGit::remove() {
 
   // Search for filename in the linked list; if found, delete it
   while (curr != nullptr) {
-	if (curr->fileName == filename) {
-	  prev->next = curr->next;
-	  delete curr;
-	  curr = nullptr;
-	} else {
-	  prev = curr;
-	  curr = curr->next;
-	}
+    if (curr->fileName == filename) {
+      // Delete head node
+      if (prev == 0) {
+        DLL_head->SLL_head = (DLL_head->SLL_head)->next;
+        delete curr;
+        curr = nullptr;
+        cout << "Success: file deleted." << endl;
+        return;
+      // Delete middle or end node
+      } else {
+        prev->next = curr->next;
+        delete curr;
+        curr = nullptr;
+        cout << "Success: file deleted." << endl;
+        return;
+      }
+      // Move to next node
+    } else {
+      prev = curr;
+      curr = curr->next;
+    }
   }
+  cout << "File does not exist." << endl;
+  return;
 }
 
 void miniGit::commit() {

@@ -10,8 +10,8 @@ void print(const string &content);
 
 int main() {
 
+  miniGit::init();
   miniGit repo;
-  repo.init();
 
   bool quit = false;
   while (!quit) {
@@ -27,6 +27,10 @@ int main() {
 	  try {
 		option      = stoi(inputLine);
 		validChoice = true;
+
+		// clear console for cleaner UX
+		for (int i = 0; i < 100; ++i)
+		  std::cout << "\n";
 	  }
 
 	  catch (...) {
@@ -38,10 +42,14 @@ int main() {
 	switch (option) {
 
 	  case 1: {
+		cout << "=== Add a file ===" << endl
+			 << endl;
 		repo.add();
 		break;
 	  }
 	  case 2: {
+		cout << "=== Remove a file ===" << endl
+			 << endl;
 		repo.remove();
 		break;
 	  }
@@ -61,13 +69,13 @@ int main() {
 
 	  case 8127: {
 		repo.setDebug(true);
-		print("Debug mode enabled.\n");
+		print("Debug mode enabled.");
 		break;
 	  }
 
 	  case 3850: {
 		repo.setDebug(false);
-		print("Debug mode disabled.\n");
+		print("Debug mode disabled.");
 		break;
 	  }
 
@@ -83,7 +91,7 @@ int main() {
 }
 
 void printMenu() {
-
+  cout << endl;
   print("          miniGit         ");
   print("+================+=======+");
   print("|     To...      | Enter |");

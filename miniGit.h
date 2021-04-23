@@ -21,7 +21,7 @@ class miniGit {
  public:
   miniGit();
   virtual ~miniGit();
-  void init();
+  static void init();
   void add();
   void remove();
   void commit();
@@ -30,6 +30,6 @@ class miniGit {
 
  private:
   doublyNode *DLL_head; // Pointer to the DLL_head of the doubly linked list
-  bool debug;
+  bool       debug;
 };
 

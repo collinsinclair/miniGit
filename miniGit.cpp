@@ -221,11 +221,42 @@ void miniGit::commit() {
 }
 
 void miniGit::checkout() {
-  // TODO issue a warning to the user that they will loose their local changes if they checkout a different version before making a commit with their current local changes
+  // Warn the user that they will lose their local changes
+  cout << "Checking out a previous commit will overwrite any local changes that have not been commited." << endl;
+  cout << "Are you sure you would like to continue? ([y]es/[n]o): " << endl;
+  string choice = getChoice();
 
-  // TODO This step will require a search through the DLL for a node with matching commit number
+  if (choice == "y") {
+    // Read in commit number to checkout
+    cout << "Enter a commit number: ";
+    string num;
+    getline(cin, num);
+    int commit = stoi(num);
 
-  // TODO must disallow add, remove, and commit operations when the current version is different from the most recent commit (the last DLL node)
+    doublyNode* currentCommit = DLL_head;
+    doublyNode* checkoutCommit;
+
+    // Search through DLL for checkoutCommit and currentCommit
+    while (currentCommit->next != nullptr) {
+      // If checkout node is found, set it equal to checkoutCommit
+      if (currentCommit->commitNumber == commit) {
+        checkoutCommit = currentCommit;
+      } else {
+        currentCommit = currentCommit->next;
+      }
+    }
+
+    // deep copy SLL from checkoutCommit to currentCommit
+    auto *deepCopyNode = currentCommit->SLL_head;
+    while(deepCopyNode != nullptr){
+      deepCopyNode = deepCopyNode->next;
+    }
+
+    return;
+  // Else, return
+  } else {
+    return;
+  }
 }
 
 void miniGit::init() {

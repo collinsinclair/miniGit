@@ -246,9 +246,13 @@ void miniGit::checkout() {
       }
     }
 
-    // deep copy SLL from checkoutCommit to currentCommit
-    auto *deepCopyNode = currentCommit->SLL_head;
+    // deep copy SLL from checkoutCommit to the end of currentCommit's SLL
+    // Haven't implemented this yet- will later tonight. Simply put entire checkoutNode SLL at the end of the currentCommit SLL (edge case: duplicate files?)
+    auto *deepCopyNode = checkoutCommit->SLL_head;
+    auto *node = currentCommit->SLL_head;
     while(deepCopyNode != nullptr){
+      node->fileName = deepCopyNode->file
+
       deepCopyNode = deepCopyNode->next;
     }
 

@@ -321,23 +321,31 @@ void miniGit::checkout() {
 	  // For each checkout SLL node, loop through currentCommit SLL
 	  while (curr != nullptr) {
 		// If checkout is contained in currentCommit SLL, break out of the loop
+		if (debug)
+		  cout << "DEBUG MSG: checkout file version, current file version, checkout file name, current filename = "
+			   << checkout->fileVersion << " , " << curr->fileVersion << "  , " << checkout->fileName << " , "
+			   << curr->fileName << endl;
 		if ((checkout->fileVersion == curr->fileVersion) && (checkout->fileName == curr->fileName)) {
 		  inCurrentExactly = true;
-		  cout << checkout->fileName << endl;
+		  if (debug) cout << "DEBUG MSG: inCurrentExactly: " << inCurrentExactly << endl;
 		  break;
 		} else if (checkout->fileName == curr->fileName) {
 		  curr->fileVersion = checkout->fileVersion;
 		  copy(".miniGit/" + checkout->fileVersion, checkout->fileName);
 		  inCurrentOldVersion = true;
-		  cout << checkout->fileName << endl;
+		  if (debug) cout << "DEBUG MSG: inCurrentOldVersion: " << inCurrentOldVersion << endl;
 		  break;
 		}
 		curr = curr->next;
 	  }
-	  
+
+	  if (debug)
+		cout << "DEBUG MSG: For file " << checkout->fileName << ", currentExactly, currentOld = " << inCurrentExactly
+			 << " , " << inCurrentOldVersion << endl;
+
 
 	  // If checkout isn't contained in currentCommit SLL, make tmp the new head
-	  if (!inCurrentOldVersion && !inCurrentOldVersion) {
+	  if (!inCurrentOldVersion && !inCurrentExactly) {
 		auto *toAdd = new singlyNode;
 		toAdd->fileName = checkout->fileName;
 		toAdd->fileVersion = checkout->fileVersion;
@@ -350,7 +358,8 @@ void miniGit::checkout() {
 	  printStructure(DLL_head);
 
 	  checkout = checkout->next;
-	  inCurrentOldVersion = false;
+	  curr = currentCommit->SLL_head;
+	  inCurrentExactly = false;
 	  inCurrentOldVersion = false;
 	}
 	cout << "Checkout successful." << endl;

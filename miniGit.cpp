@@ -212,6 +212,7 @@ void miniGit::commit() {
   currentCommit->next     = newCommit;
   newCommit->previous     = currentCommit;
   newCommit->commitNumber = currentCommit->commitNumber + 1;
+  cout << "Commit # " << currentCommit->commitNumber << " is finished." << endl;
 
   // deep copy SLL from currentCommit to newCommit
   auto *deepCopyNode = currentCommit->SLL_head;
@@ -246,19 +247,39 @@ void miniGit::checkout() {
       }
     }
 
-    // deep copy SLL from checkoutCommit to the end of currentCommit's SLL
-    // Haven't implemented this yet- will later tonight. Simply put entire checkoutNode SLL at the end of the currentCommit SLL (edge case: duplicate files?)
-    auto *deepCopyNode = checkoutCommit->SLL_head;
-    auto *node = currentCommit->SLL_head;
-    while(deepCopyNode != nullptr){
-      node->fileName = deepCopyNode->file
+    // Copy checkoutCommit SLL to currentCommit SLL
+    singlyNode *curr = currentCommit->SLL_head;
+    singlyNode *checkout = checkoutCommit->SLL_head;
+    singlyNode *tmp;
+    bool inCurrent = false;
 
-      deepCopyNode = deepCopyNode->next;
+    // Loop through checkoutCommit SLL
+    while (checkout != nullptr) {
+      // For each checkout SLL node, check if it is contained in current SLL
+      while (curr != nullptr) {
+        // If checkout is contained in currentCommit SLL, break out of the loop
+        if ((checkout->fileVersion == curr->fileVersion) && (checkout->fileName == curr->fileName)) {
+          inCurrent = true;
+          break;
+        } 
+        curr = curr->next;
+      }
+
+      // If checkout isn't contained in currentCommit SLL, make tmp the new head
+      if (!inCurrent) {
+        tmp = checkout;
+        tmp->next = currentCommit->SLL_head;
+        currentCommit->SLL_head = tmp;
+        cout << "Previous file (" << currentCommit->SLL_head->fileName << " from commit # " << commit << " added to current repository." << endl;
+      }
+
+      checkout = checkout->next;
     }
-
+    cout << "Checkout successful." << endl;
     return;
   // Else, return
   } else {
+    cout << "No checkout made." << endl;
     return;
   }
 }

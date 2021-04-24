@@ -167,16 +167,11 @@ void miniGit::add() {
 }
 
 void miniGit::remove() {
-  // Empty list
-  if (DLL_head == nullptr)
-	return;
-
   // Read in filename to be removed
   cout << "Enter a file name: ";
   string filename;
   getline(cin, filename);
 
-  if (debug) print("DEBUG MSG: commit() called.");
   // first find current DLL (most recent commit)
   doublyNode *currentCommitDLL = DLL_head;
   if (debug) print("DEBUG MSG: Beginning search for current DLL.");
@@ -187,6 +182,10 @@ void miniGit::remove() {
   }
   if (debug) print("DEBUG MSG: Search for current DLL complete.");
 
+// Empty list
+  if (currentCommitDLL == nullptr)
+	return;
+
   singlyNode *curr = currentCommitDLL->SLL_head;
   singlyNode *prev = nullptr;
 
@@ -195,7 +194,7 @@ void miniGit::remove() {
 	if (curr->fileName == filename) {
 	  // Delete head node
 	  if (prev == nullptr) {
-		DLL_head->SLL_head = (DLL_head->SLL_head)->next;
+		currentCommitDLL->SLL_head = (currentCommitDLL->SLL_head)->next;
 		delete curr;
 		cout << "Success: file deleted." << endl;
 		return;

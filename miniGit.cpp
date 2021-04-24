@@ -296,7 +296,7 @@ void miniGit::checkout() {
 	string num;
 	getline(cin, num);
 	int commit = stoi(num);
-	printStructure(DLL_head);
+	if (debug) printStructure(DLL_head);
 
 	doublyNode *currentCommit = DLL_head;
 	doublyNode *checkoutCommit;
@@ -355,7 +355,7 @@ void miniGit::checkout() {
 		cout << "Previous file (" << currentCommit->SLL_head->fileName << " from commit # " << commit
 			 << " added to current repository." << endl;
 	  }
-	  printStructure(DLL_head);
+	  if (debug) printStructure(DLL_head);
 
 	  checkout = checkout->next;
 	  curr = currentCommit->SLL_head;

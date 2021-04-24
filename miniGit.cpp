@@ -5,7 +5,6 @@
 #include <fstream>
 #include <sstream>
 
-
 // ---------- HELPERS ----------
 string getChoice() {
   string choice;
@@ -287,6 +286,7 @@ void miniGit::checkout() {
 	string num;
 	getline(cin, num);
 	int commit = stoi(num);
+	printStructure(DLL_head)
 
 	doublyNode *currentCommit = DLL_head;
 	doublyNode *checkoutCommit;
@@ -296,11 +296,9 @@ void miniGit::checkout() {
 	  // If checkout node is found, set it equal to checkoutCommit
 	  if (currentCommit->commitNumber == commit) {
 		checkoutCommit = currentCommit;
-		cout << checkoutCommit->commitNumber << endl;
 	  }
 	  currentCommit = currentCommit->next;
 	}
-	cout << "test0" << endl;
 
 	// Copy checkoutCommit SLL to currentCommit SLL
 	singlyNode *curr = currentCommit->SLL_head;
@@ -320,7 +318,6 @@ void miniGit::checkout() {
 		}
 		curr = curr->next;
 	  }
-	  cout << "test1" << endl;
 
 	  // If checkout isn't contained in currentCommit SLL, make tmp the new head
 	  if (!inCurrent) {
@@ -330,6 +327,7 @@ void miniGit::checkout() {
 		cout << "Previous file (" << currentCommit->SLL_head->fileName << " from commit # " << commit
 			 << " added to current repository." << endl;
 	  }
+	  printStructure(DLL_head)
 
 	  checkout = checkout->next;
 	}

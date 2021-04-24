@@ -242,10 +242,11 @@ void miniGit::checkout() {
       // If checkout node is found, set it equal to checkoutCommit
       if (currentCommit->commitNumber == commit) {
         checkoutCommit = currentCommit;
-      } else {
-        currentCommit = currentCommit->next;
+        cout << checkoutCommit->commitNumber << endl;
       }
+      currentCommit = currentCommit->next;
     }
+    cout << "test0" << endl;
 
     // Copy checkoutCommit SLL to currentCommit SLL
     singlyNode *curr = currentCommit->SLL_head;
@@ -255,15 +256,17 @@ void miniGit::checkout() {
 
     // Loop through checkoutCommit SLL
     while (checkout != nullptr) {
-      // For each checkout SLL node, check if it is contained in current SLL
+      // For each checkout SLL node, loop through currentCommit SLL
       while (curr != nullptr) {
         // If checkout is contained in currentCommit SLL, break out of the loop
         if ((checkout->fileVersion == curr->fileVersion) && (checkout->fileName == curr->fileName)) {
           inCurrent = true;
+          cout << checkout->fileName << endl;
           break;
         } 
         curr = curr->next;
       }
+      cout << "test1" << endl;
 
       // If checkout isn't contained in currentCommit SLL, make tmp the new head
       if (!inCurrent) {

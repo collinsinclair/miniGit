@@ -334,6 +334,7 @@ void miniGit::checkout() {
 		}
 		curr = curr->next;
 	  }
+	  
 
 	  // If checkout isn't contained in currentCommit SLL, make tmp the new head
 	  if (!inCurrentOldVersion && !inCurrentOldVersion) {

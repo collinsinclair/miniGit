@@ -313,7 +313,6 @@ void miniGit::checkout() {
 	// Copy checkoutCommit SLL to currentCommit SLL
 	singlyNode *curr = currentCommit->SLL_head;
 	singlyNode *checkout = checkoutCommit->SLL_head;
-	singlyNode *tmp;
 	bool inCurrent = false;
 
 	// Loop through checkoutCommit SLL
@@ -331,9 +330,11 @@ void miniGit::checkout() {
 
 	  // If checkout isn't contained in currentCommit SLL, make tmp the new head
 	  if (!inCurrent) {
-		tmp = checkout;
-		tmp->next = currentCommit->SLL_head;
-		currentCommit->SLL_head = tmp;
+		auto *toAdd = new singlyNode;
+		toAdd->fileName = checkout->fileName;
+		toAdd->fileVersion = checkout->fileVersion;
+		toAdd->next = currentCommit->SLL_head;
+		currentCommit->SLL_head = toAdd;
 		cout << "Previous file (" << currentCommit->SLL_head->fileName << " from commit # " << commit
 			 << " added to current repository." << endl;
 	  }

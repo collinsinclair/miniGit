@@ -313,7 +313,8 @@ void miniGit::checkout() {
 	// Copy checkoutCommit SLL to currentCommit SLL
 	singlyNode *curr = currentCommit->SLL_head;
 	singlyNode *checkout = checkoutCommit->SLL_head;
-	bool inCurrent = false;
+	bool inCurrentExactly = false;
+	bool inCurrentOldVersion = false;
 
 	// Loop through checkoutCommit SLL
 	while (checkout != nullptr) {
@@ -321,7 +322,13 @@ void miniGit::checkout() {
 	  while (curr != nullptr) {
 		// If checkout is contained in currentCommit SLL, break out of the loop
 		if ((checkout->fileVersion == curr->fileVersion) && (checkout->fileName == curr->fileName)) {
-		  inCurrent = true;
+		  inCurrentExactly = true;
+		  cout << checkout->fileName << endl;
+		  break;
+		} else if (checkout->fileName == curr->fileName) {
+		  curr->fileVersion = checkout->fileVersion;
+		  copy(".miniGit/" + checkout->fileVersion, checkout->fileName);
+		  inCurrentOldVersion = true;
 		  cout << checkout->fileName << endl;
 		  break;
 		}
@@ -329,11 +336,12 @@ void miniGit::checkout() {
 	  }
 
 	  // If checkout isn't contained in currentCommit SLL, make tmp the new head
-	  if (!inCurrent) {
+	  if (!inCurrentOldVersion && !inCurrentOldVersion) {
 		auto *toAdd = new singlyNode;
 		toAdd->fileName = checkout->fileName;
 		toAdd->fileVersion = checkout->fileVersion;
 		toAdd->next = currentCommit->SLL_head;
+		copy(".miniGit/" + toAdd->fileVersion, toAdd->fileName);
 		currentCommit->SLL_head = toAdd;
 		cout << "Previous file (" << currentCommit->SLL_head->fileName << " from commit # " << commit
 			 << " added to current repository." << endl;
@@ -341,7 +349,8 @@ void miniGit::checkout() {
 	  printStructure(DLL_head);
 
 	  checkout = checkout->next;
-	  inCurrent = false;
+	  inCurrentOldVersion = false;
+	  inCurrentOldVersion = false;
 	}
 	cout << "Checkout successful." << endl;
 	return;

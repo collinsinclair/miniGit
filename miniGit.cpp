@@ -340,6 +340,7 @@ void miniGit::checkout() {
 	  printStructure(DLL_head);
 
 	  checkout = checkout->next;
+	  inCurrent = false;
 	}
 	cout << "Checkout successful." << endl;
 	return;

@@ -42,7 +42,7 @@ bool changed(const string &origin_, const string &destination_, bool debug) {
 	cout << "Destination: ==========================================" << endl
 		 << destinationString.str() << endl
 		 << "==========================================" << endl
-		 << "File changed? " << not(originString.str() == destinationString.str());
+		 << "DEBUG MSG: File changed? " << not(originString.str() == destinationString.str()) << endl;
   }
   return not(originString.str() == destinationString.str());
 }
@@ -70,13 +70,14 @@ void printSLL(singlyNode *node) {
   cout << "=======================" << endl;
 }
 
-void printDLL(doublyNode *node) {
-  cout << "===== CURRENT DLL =====" << endl;
+void printStructure(doublyNode *node) {
+  cout << "+++++===== CURRENT STRUCTURE =====+++++" << endl;
   while (node != nullptr) {
-	cout << "COMMIT NUMBER: " << node->commitNumber << endl;
+	cout << "Commit Number: " << node->commitNumber << endl;
+	printSLL(node->SLL_head);
 	node = node->next;
   }
-  cout << "=======================" << endl;
+  cout << "+++++=====%%%%%%%%%%%%%%%%%%%=====+++++" << endl;
 }
 //------------------------------
 
@@ -162,8 +163,7 @@ void miniGit::add() {
 	}
   }
 
-  if (debug) printDLL(currentDLL);
-  if (debug) printSLL(currentDLL->SLL_head);
+  if (debug) printStructure(DLL_head);
 }
 
 void miniGit::remove() {
@@ -205,25 +205,20 @@ void miniGit::remove() {
 }
 
 void miniGit::commit() {
+  if (debug) print("DEBUG MSG: commit() called.");
   // first find current DLL (most recent commit)
-  if (debug) print("DEBUG MSG: Commit initiated.");
-  doublyNode *currentCommit = DLL_head;
-  if (debug) print("DEBUG MSG: currentCommit set to DLL_head.");
-  while (currentCommit->next != nullptr) {
-	if (debug) {
-	  cout << "DEBUG MSG: Current commit number: " << currentCommit->commitNumber << endl;
-	  print("DEBUG MSG: Searching for last DLL Node.");
-	}
-	currentCommit = currentCommit->next;
-	if (debug) print("DEBUG MSG: currentCommit updated.");
+  doublyNode *currentCommitDLL = DLL_head;
+  if (debug) print("DEBUG MSG: Beginning search for current DLL.");
+  while (currentCommitDLL->next != nullptr) {
+	if (debug) cout << "DEBUG MSG: Current commit number: " << currentCommitDLL->commitNumber << endl;
+	currentCommitDLL = currentCommitDLL->next;
+	if (debug) cout << "DEBUG MSG: New commit number: " << currentCommitDLL->commitNumber << endl;
   }
-  if (debug) print("DEBUG MSG: Search finished. DLL is current.");
-  if (debug) printDLL(currentCommit);
+  if (debug) print("DEBUG MSG: Search for current DLL complete.");
+
   // traverse current SLL in its entirety
-  singlyNode *searchPtr = currentCommit->SLL_head;
-  if (debug) print("DEBUG MSG: searchPtr set to SLL_head.");
+  singlyNode *searchPtr = currentCommitDLL->SLL_head;
   while (searchPtr != nullptr) {
-	if (debug) cout << "DEBUG MSG: current node file: " << searchPtr->fileName << endl;
 	string path = ".minigit/" + searchPtr->fileVersion;
 	// check whether the corresponding fileVersion file exists in .minigit directory
 	bool exists = std::filesystem::exists(path);
@@ -249,6 +244,7 @@ void miniGit::commit() {
 		++versionNumber;
 		string versionNumberString;
 		// haven't written code for when version exceeds two characters - maybe later
+
 		if (versionNumber > 99) {
 		  cout << "Max space exceeded. Commit failed." << endl;
 		  return;
@@ -266,14 +262,16 @@ void miniGit::commit() {
   }
   // once all the files have been scanned, create a new DLL node
   auto *newCommit = new doublyNode;
-  currentCommit->next = newCommit;
-  newCommit->previous = currentCommit;
-  newCommit->commitNumber = currentCommit->commitNumber + 1;
+  currentCommitDLL->next = newCommit;
+  newCommit->next = nullptr;
+  newCommit->previous = currentCommitDLL;
+  newCommit->commitNumber = currentCommitDLL->commitNumber + 1;
   newCommit->SLL_head = nullptr;
-  cout << "Commit # " << currentCommit->commitNumber << " is finished." << endl;
-  // deep copy SLL from currentCommit to newCommit
-  newCommit->SLL_head = copySLLNode(currentCommit->SLL_head, debug);
-  if (debug) printSLL(currentCommit->SLL_head);
+  cout << "Commit # " << currentCommitDLL->commitNumber << " is finished." << endl;
+  // deep copy SLL from currentCommitDLL to newCommit
+  newCommit->SLL_head = copySLLNode(currentCommitDLL->SLL_head, debug);
+
+  if (debug) printStructure(DLL_head);
 }
 
 void miniGit::checkout() {

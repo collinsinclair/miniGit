@@ -42,3 +42,4 @@
 *.pdf
 /miniGit
 /.minigit/
+/.vscode/

@@ -176,7 +176,18 @@ void miniGit::remove() {
   string filename;
   getline(cin, filename);
 
-  singlyNode *curr = DLL_head->SLL_head;
+  if (debug) print("DEBUG MSG: commit() called.");
+  // first find current DLL (most recent commit)
+  doublyNode *currentCommitDLL = DLL_head;
+  if (debug) print("DEBUG MSG: Beginning search for current DLL.");
+  while (currentCommitDLL->next != nullptr) {
+	if (debug) cout << "DEBUG MSG: Current commit number: " << currentCommitDLL->commitNumber << endl;
+	currentCommitDLL = currentCommitDLL->next;
+	if (debug) cout << "DEBUG MSG: New commit number: " << currentCommitDLL->commitNumber << endl;
+  }
+  if (debug) print("DEBUG MSG: Search for current DLL complete.");
+
+  singlyNode *curr = currentCommitDLL->SLL_head;
   singlyNode *prev = nullptr;
 
   // Search for filename in the linked list; if found, delete it

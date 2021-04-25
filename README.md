@@ -59,13 +59,13 @@ version number (`"_v##"`) from the file extension to open the file properly.
 
 If you'd like to restore the files in your working directory to a previous version, use menu option 4 to check out a
 previous commit. This will replace the files in your current working directory with copies of the same files as they
-were when you submitted the specified commit. **Warning:** any uncommitted changes will be lost upon checkout - it is a
-good idea to always commit your changes before checking out a previous commit if you wish to save your changes.
+were when you submitted the specified commit. **Warning:** any uncommitted changes will be lost upon checkout - it is
+always a good idea to commit your changes before checking out a previous commit if you wish to save your changes.
 
 ### Quit
 
 Menu option 5 will exit `miniGit`. This will delete the repository structure and disable you from checking out previous
-commits from within the program. Quitting `miniGit` does *not* erase and files in your working directory, nor does it
+commits from within the program. Quitting `miniGit` does *not* erase any files in your working directory, nor does it
 erase any versioned files from commits you made during use of the program. All version files will still be available in
 the `./minigit` directory.
 

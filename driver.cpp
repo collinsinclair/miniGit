@@ -15,9 +15,9 @@ int main() {
 
   bool quit = false;
   while (!quit) {
-	int    option;
+	int option;
 	string inputLine;
-	bool   validChoice = false;
+	bool validChoice = false;
 
 	printMenu();
 
@@ -25,7 +25,7 @@ int main() {
 
 	while (!validChoice) {
 	  try {
-		option      = stoi(inputLine);
+		option = stoi(inputLine);
 		validChoice = true;
 
 		// clear console for cleaner UX

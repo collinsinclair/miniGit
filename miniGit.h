@@ -5,13 +5,13 @@
 using namespace std;
 
 struct singlyNode {
-  string     fileName; // Name of local file
-  string     fileVersion; // Name of file in .minigit folder
+  string fileName; // Name of local file
+  string fileVersion; // Name of file in .minigit folder
   singlyNode *next;
 };
 
 struct doublyNode {
-  int        commitNumber;
+  int commitNumber;
   singlyNode *SLL_head;
   doublyNode *previous;
   doublyNode *next;
@@ -30,6 +30,6 @@ class miniGit {
 
  private:
   doublyNode *DLL_head; // Pointer to the DLL_head of the doubly linked list
-  bool       debug;
+  bool debug;
 };
 

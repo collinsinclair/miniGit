@@ -8,4 +8,4 @@ include_directories(.)
 add_executable(miniGit
         driver.cpp
         miniGit.cpp
-        miniGit.h)
+        miniGit.hpp)

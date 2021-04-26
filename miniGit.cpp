@@ -1,4 +1,4 @@
-#include "miniGit.h"
+#include "miniGit.hpp"
 #include<filesystem>
 #include<iostream>
 #include <cstdlib>

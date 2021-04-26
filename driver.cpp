@@ -1,8 +1,6 @@
 #include <iostream>
-#include <fstream>
-#include <filesystem>
 #include <vector>
-#include "miniGit.h"
+#include "miniGit.hpp"
 using namespace std;
 
 void printMenu(); // prints user options
